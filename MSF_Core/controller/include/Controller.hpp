@@ -16,11 +16,14 @@
 
 #include "Entity.hpp"
 #include "Missile.hpp"
+#include "SCF.hpp"
 
 class Controller {
 public:
     // Constructor initializes core components
-    Controller() : clock(), scheduler(), registry() {}
+    Controller() : clock(), scheduler(), registry() {
+
+    }
 
     // Application loop entry point
     void run();
@@ -35,6 +38,7 @@ private:
     SimulationClock clock;
     SimEventScheduler scheduler;
     EntityRegistry registry;
+    SCF scf = SCF(); // Initialize SCF with reference to the entity registry
 
     bool is_running = true; // Flag to track if the simulation is running
     bool is_paused = false; // Flag to track if the simulation is paused

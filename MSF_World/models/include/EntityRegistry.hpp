@@ -22,10 +22,8 @@
 #include <cstdlib>
 
 #include "Entity.hpp"
-
-// Forward declarations to avoid circular dependencies
-class SimEventScheduler;
-class SimulationClock;
+#include "Clock.hpp"
+#include "Scheduler.hpp"
 
 class EntityRegistry {
 public:
@@ -39,6 +37,9 @@ public:
                       << " has requested shutdown. Removing from registry." << std::endl;
             this->remove_entity(id);
         });
+
+        std::cout << "[INFO] Registered entity: ID=" << entity->get_id()
+                  << ", Name='" << entity->get_name() << "'\n" << std::endl;
     }
 
     // Remove an entity from the registry by ID

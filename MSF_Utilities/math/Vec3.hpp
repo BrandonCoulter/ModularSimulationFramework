@@ -47,6 +47,11 @@ public:
         return *this;
     }
 
+    friend std::ostream& operator<<(std::ostream& os, const Vec3& vec) {
+        os << "Vec3(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
+        return os;
+    }
+
     // Dot product
     double dot(const Vec3& other) const {
         return x * other.x + y * other.y + z * other.z;

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<MSFScenario>
+    <Metadata>
+        <Name>Basic Scenario</Name>
+        <Description>A simple scenario with two missiles and a waypoint.</Description>
+        <Author>Brandon Coulter</Author>
+    </Metadata>
+
+    <SimulationSetup>
+        <TimeStep>0.001</TimeStep>
+        <Timeout>600.0</Timeout>
+        <GenericEventTriggers>
+            <!-- Enter Events Here As Needed -->
+        </GenericEventTriggers>
+     </SimulationSetup>
+
+    <!-- Sim Entities -->
+    <SimulationEntities>
+        <SimulationEntity name="missile">
+            <ModelClass>missile</ModelClass>
+            <ModelType>dynamic</ModelType>
+            <EmplacementData>
+                <position x="0.0" y="0.0" z="0.0"/>
+                <orientation roll="0.0" pitch="0.0" yaw="0.0"/>
+            </EmplacementData>
+            <EntityParameters>
+                <parameter name="speed" value="1500.0" unit="m/s"/>
+            </EntityParameters>
+            <EventTriggers>
+                <!-- <trigger time="10.0" type="SELF_DESTRUCT" delay="1.0"/> -->
+            </EventTriggers>
+        </SimulationEntity>
+        <SimulationEntity name="missile">
+            <ModelClass>missile</ModelClass>
+            <ModelType>dynamic</ModelType>
+            <EmplacementData>
+                <position x="0.0" y="0.0" z="0.0"/>
+                <orientation roll="0.0" pitch="0.0" yaw="0.0"/>
+            </EmplacementData>
+            <EntityParameters>
+                <parameter name="speed" value="1500.0" unit="m/s"/>
+            </EntityParameters>
+            <EventTriggers>
+                <!-- <trigger time="45.0" type="STAGE2" delay="1.0"/> -->
+            </EventTriggers>
+        </SimulationEntity>
+
+        <!-- Static Waypoint -->
+        <SimulationEntity name="end_waypoint">
+            <ModelClass>waypoint</ModelClass>
+            <ModelType>static</ModelType>
+            <EmplacementData>
+                <position x="1000.0" y="10000.0" z="1000.0"/>
+            </EmplacementData>
+            <EntityParameters>
+                <!-- Tolerance radius in m (1 cm)-->
+                <parameter name="tolerance" value="0.01" unit="m"/>
+            </EntityParameters>
+        </SimulationEntity>
+    </SimulationEntities>
+</MSFScenario>

@@ -18,6 +18,8 @@
 #include <functional>
 
 #include "EventRequest.hpp"
+#include "Vec3.hpp"
+#include "Quat.hpp"
 
 class Entity {
 

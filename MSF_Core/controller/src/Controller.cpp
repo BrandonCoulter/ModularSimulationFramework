@@ -6,48 +6,17 @@ void Controller::initialize() {
     // Reset simulation time to 0 seconds
     clock.reset(0.0);
 
-    // Temp: Register some entities for testing
-    registry.register_entity(std::make_shared<Missile>("Missile1"));
-
-    // NOTE: schedule_event delays are now in SECONDS (simulation time)
-    scheduler.schedule_event(clock, [this]() {
-        registry.print_all_entities();
-    }, 3.0); // Print after 3 seconds
-
-    scheduler.schedule_event(clock, [this]() {
-        std::cout << "[EVENT] Scheduled Pause Event Triggered at t=" << clock.now() << "s" << std::endl;
-        pause();
-    }, 5.0); // Pause after 5 seconds
-
-    scheduler.schedule_event(clock, [this]() {
-        std::cout << "[EVENT] Scheduled Resume Event Triggered at t=" << clock.now() << "s" << std::endl;
-        resume();
-    }, 8.0); // Resume after 8 seconds
-
-    scheduler.schedule_event(clock, [this]() {
-        auto missile = registry.get_entity_by_name("Missile1");
-        if (!missile) {
-            std::cout << "[WARNING] Could not retrieve entity by name" << std::endl;
-            return;
-        }
-
-        // Request an entity-owned event at an ABSOLUTE simulation time (seconds)
-        const double target_time = clock.now() + 5.0; // 5 seconds in the future
-        missile->request_event(EventRequest{
-            missile->get_id(),
-            target_time,
-            "Test Event from Missile1",
-            [missile]() {
-                std::cout << "\n[EVENT] Executing event callback for " << missile->get_name()
-                          << " with ID " << missile->get_id() << "\n" << std::endl;
-                missile->shutdown();
-            }
-        });
-    }, 10.0);
+    // TODO: Hardcoded path needs to be replace with a argument reader
+    scf.set_scf_filepath("/Users/brandoncoulter/Documents/Coding/Simulation/ModularSimulationFramework/Test/scenario/basic.xml");
+    if (!scf.parse_scf(registry)) {
+        std::cerr << "[ERROR] Failed to parse SCF file: " << scf.get_scf_filepath() << std::endl;
+        exit(EXIT_FAILURE);
+    }
 
     scheduler.schedule_event(clock, [this]() {
         std::cout << "[EVENT] Scheduled Shutdown Event Triggered at t=" << clock.now() << "s" << std::endl;
         is_running = false; // Stop the main loop after this event
+        shutdown();
     }, 120.0);
 }
 
@@ -90,6 +59,7 @@ void Controller::shutdown() {
     std::cout << "[INFO] Shutting down Simulation Controller" << std::endl;
     registry.shutdown(); // Clean up entities
     std::cout << "[INFO] Shutdown complete for Simulation Controller" << std::endl;
+    exit(EXIT_SUCCESS);
 }
 
 void Controller::pause() {

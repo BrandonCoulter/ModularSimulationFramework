@@ -1,14 +1,16 @@
 # MSF_World library
 
-# World sources (none yet - header-only)
+# World sources
 world_sources = [
     'models/src/Entity.cpp',
+    'models/src/PhysicsEntity.cpp',
 ]
 
 # Include directories for headers
 world_inc = include_directories(
     'models/include',
-    'models/missile',
+    'models/missile/include',
+    'models/waypoint/include',
     'environment/include',
 )
 

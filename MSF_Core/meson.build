@@ -3,10 +3,13 @@
 core_sources = [
     'main.cpp',
     'controller/src/Controller.cpp',
+    'controller/src/IO/XMLParser.cpp',
+    'controller/src/IO/SCF.cpp',
 ]
 
 inc_dir = include_directories(
     'controller/include',
+    'controller/include/IO',
 )
 
 executable(
