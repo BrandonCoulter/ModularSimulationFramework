@@ -16,6 +16,8 @@
 #include <unordered_map>
 #include <iostream>
 #include <typeinfo>
+#include <functional>
+#include <map>
 
 // Demangling is GCC/Clang-specific; keep it for convenience.
 #include <cxxabi.h>
@@ -24,6 +26,10 @@
 #include "Entity.hpp"
 #include "Clock.hpp"
 #include "Scheduler.hpp"
+#include "Missile.hpp"
+#include "Waypoint.hpp"
+
+using CreateEntityFunc = std::function<std::unique_ptr<Entity>()>;
 
 class EntityRegistry {
 public:
@@ -40,6 +46,21 @@ public:
 
         std::cout << "[INFO] Registered entity: ID=" << entity->get_id()
                   << ", Name='" << entity->get_name() << "'\n" << std::endl;
+    }
+
+    void register_classes() {
+        entity_registry["missile"] = []() { return std::make_unique<Missile>("missile"); };
+        entity_registry["waypoint"] = []() { return std::make_unique<Waypoint>("waypoint"); };
+    }
+
+    std::unique_ptr<Entity> create_entity_from_string(const std::string& class_name) {
+        auto it = entity_registry.find(class_name);
+        if (it != entity_registry.end()) {
+            return it->second();
+        } else {
+            std::cerr << "[ERROR] No factory function registered for class name: " << class_name << std::endl;
+            return nullptr;
+        }
     }
 
     // Remove an entity from the registry by ID
@@ -142,4 +163,5 @@ public:
 
 private:
     std::unordered_map<int, std::shared_ptr<Entity>> entities_; // Map of entity IDs to entity instances
+    std::map<std::string, CreateEntityFunc> entity_registry; // Map of entity names to factory functions
 };

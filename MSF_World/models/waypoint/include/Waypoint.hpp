@@ -9,6 +9,10 @@ public:
         std::cout << "[WAYPOINT] Waypoint '" << get_name() << "' with ID " << get_id() << " destroyed." << std::endl;
     }
 
+    std::unique_ptr<Entity> create() override {
+        return std::make_unique<Waypoint>("waypoint");
+    }
+
     void update(const double t, const double dt) override {
         
     } 

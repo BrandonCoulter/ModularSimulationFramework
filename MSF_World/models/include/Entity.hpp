@@ -34,6 +34,10 @@ public:
     int get_id() const {
         return entity_id;
     }
+    
+    void set_name(const std::string& new_name) {
+        entity_name = new_name;
+    }
     std::string get_name() const {
         return entity_name;
     }
@@ -44,6 +48,8 @@ public:
     }
 
     // Virtual functions
+    // create function
+    virtual std::unique_ptr<Entity> create() = 0;
     virtual void update(const double t, const double dt) = 0; // Pure virtual function to be implemented by derived classes
     virtual void shutdown();
     virtual void request_event(const EventRequest& event_request); // Event request function
@@ -55,7 +61,7 @@ public:
 protected:
     static std::atomic<int> id_counter; // Static counter for generating unique IDs
     const int entity_id; // Unique ID for this entity
-    const std::string entity_name; // Name of the entity (optional)
+    std::string entity_name; // Name of the entity (optional)
     std::function<void(int)> shutdown_callback; // Callback to notify registry of shutdown
 
 };

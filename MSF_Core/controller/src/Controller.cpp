@@ -3,8 +3,8 @@
 void Controller::initialize() {
     std::cout << "[INFO] Initializing Simulation Controller" << std::endl;
 
-    // Reset simulation time to 0 seconds
-    clock.reset(0.0);
+    // Register All Entity Classes
+    registry.register_classes();
 
     // TODO: Hardcoded path needs to be replace with a argument reader
     scf.set_scf_filepath("/Users/brandoncoulter/Documents/Coding/Simulation/ModularSimulationFramework/Test/scenario/basic.xml");
@@ -18,6 +18,9 @@ void Controller::initialize() {
         is_running = false; // Stop the main loop after this event
         shutdown();
     }, 120.0);
+
+    // Reset simulation time to 0 seconds
+    clock.reset(0.0);
 }
 
 void Controller::run() {

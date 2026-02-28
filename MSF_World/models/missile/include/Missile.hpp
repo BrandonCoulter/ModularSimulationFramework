@@ -12,6 +12,10 @@ public:
         std::cout << "[MISSILE] Missile '" << get_name() << "' with ID " << get_id() << " destroyed." << std::endl;
     }
 
+    std::unique_ptr<Entity> create() override {
+        return std::make_unique<Missile>("missile");
+    }
+
     void update(const double t, const double dt) override final {
         // Implement missile-specific update logic here
         if (fmod(t, 1.0) < dt) { 

@@ -12,12 +12,13 @@
         <Timeout>600.0</Timeout>
         <GenericEventTriggers>
             <!-- Enter Events Here As Needed -->
+            <trigger time="600.0" type="TIMEOUT" delay="0.0"/>
         </GenericEventTriggers>
      </SimulationSetup>
 
     <!-- Sim Entities -->
     <SimulationEntities>
-        <SimulationEntity name="missile">
+        <SimulationEntity name="missile_0">
             <ModelClass>missile</ModelClass>
             <ModelType>dynamic</ModelType>
             <EmplacementData>
@@ -31,7 +32,7 @@
                 <!-- <trigger time="10.0" type="SELF_DESTRUCT" delay="1.0"/> -->
             </EventTriggers>
         </SimulationEntity>
-        <SimulationEntity name="missile">
+        <SimulationEntity name="missile_1">
             <ModelClass>missile</ModelClass>
             <ModelType>dynamic</ModelType>
             <EmplacementData>
@@ -49,6 +50,17 @@
         <!-- Static Waypoint -->
         <SimulationEntity name="end_waypoint">
             <ModelClass>waypoint</ModelClass>
+            <ModelType>static</ModelType>
+            <EmplacementData>
+                <position x="1000.0" y="10000.0" z="1000.0"/>
+            </EmplacementData>
+            <EntityParameters>
+                <!-- Tolerance radius in m (1 cm)-->
+                <parameter name="tolerance" value="0.01" unit="m"/>
+            </EntityParameters>
+        </SimulationEntity>
+        <SimulationEntity name="broken_entity">
+            <ModelClass>broken</ModelClass>
             <ModelType>static</ModelType>
             <EmplacementData>
                 <position x="1000.0" y="10000.0" z="1000.0"/>

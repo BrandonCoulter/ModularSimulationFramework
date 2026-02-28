@@ -9,8 +9,9 @@ public:
     ~PhysicsEntity() override = default;
 
     // Override the update function to include physics updates
+    std::unique_ptr<Entity> create() override = 0; 
     void update(const double t, const double dt) override;
-    void shutdown() override { Entity::shutdown(); } // Just call the base shutdown for now;
+    void shutdown() override { Entity::shutdown(); } 
     void request_event(const EventRequest& event_request) override {
         Entity::request_event(event_request); // Just call the base request_event for now
     };

@@ -27,11 +27,13 @@ bool SCF::parse_scf(EntityRegistry& registry) {
     // Now get SimulationEntity nodes from within the wrapper
     auto entity_nodes = entities_wrapper.get_children("SimulationEntity");
     
+    // Make sure there are simulation entities found
     if (entity_nodes.empty()) {
         std::cerr << "[WARNING] No SimulationEntity elements found in SimulationEntities." << std::endl;
         return false; 
     }
     
+    // Parse each SimulationEntity node to create and register entities in the registry
     for (const auto& entity_node : entity_nodes) {
         parse_entity(registry, entity_node);
     }
@@ -45,27 +47,8 @@ bool SCF::load_scf(const std::string& filepath) {
         std::cerr << "[ERROR] Failed to load SCF file: " << filepath << ". Error: " << parser.get_error() << std::endl;
         return false;
     } else {
-        std::cout << "[INFO] Successfully loaded SCF file: " << filepath << "\n" << std::endl;
         return true;
     }
-}
-
-std::vector<Entity> SCF::parse_entities(EntityRegistry& registry, const XMLParser::XMLNode& entities_node) {
-    std::vector<Entity> entities;
-    
-    if (!entities_node.is_valid()) {
-        std::cerr << "[WARNING] entities_node is invalid, returning empty entity list." << std::endl;
-        return entities;
-    }
-    
-    // Get all SimulationEntity child elements
-    auto entity_nodes = entities_node.get_children("SimulationEntity");
-    
-    for (const auto& entity_node : entity_nodes) {
-        parse_entity(registry, entity_node);
-    }
-    
-    return entities;
 }
 
 void SCF::parse_entity(EntityRegistry& registry, const XMLParser::XMLNode& entity_node) {
@@ -81,8 +64,6 @@ void SCF::parse_entity(EntityRegistry& registry, const XMLParser::XMLNode& entit
         return;
     }
     
-    std::cout << "[INFO] Parsed entity: " << name_attr.value() << std::endl;
-    
     // Get model class
     auto model_class = entity_node.get_child("ModelClass");
     if (model_class.is_valid()) {
@@ -93,15 +74,14 @@ void SCF::parse_entity(EntityRegistry& registry, const XMLParser::XMLNode& entit
             // Convert to lowercase just incase (e.g., "Missile" vs "missile")
             std::string class_str_lower = class_text.value();
             std::transform(class_str_lower.begin(), class_str_lower.end(), class_str_lower.begin(), [](unsigned char c){ return std::tolower(c); });
-
-            if (class_str_lower == "missile") {
-                std::cout << "[INFO] Creating Missile entity instance." << std::endl;
-                std::unique_ptr<Missile> missile = std::make_unique<Missile>(name_attr.value());
-                registry.register_entity(std::move(missile));
-            } else if (class_str_lower == "waypoint") {
-                std::cout << "[INFO] Creating Waypoint entity instance." << std::endl;
-                std::unique_ptr<Waypoint> waypoint = std::make_unique<Waypoint>(name_attr.value());
-                registry.register_entity(std::move(waypoint));
+            
+            // Create entity using the registry factory function
+            auto entity = registry.create_entity_from_string(class_str_lower);
+            if (entity) {
+                entity->set_name(name_attr.value());
+                registry.register_entity(std::move(entity));
+            } else {
+                std::cerr << "[ERROR] Failed to create entity of class: " << class_str_lower << std::endl;
             }
         }
     }

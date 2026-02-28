@@ -29,8 +29,7 @@ public:
 
     bool parse_scf(EntityRegistry& registry);
     bool load_scf(const std::string& filepath);
-
-    std::vector<Entity> parse_entities(EntityRegistry& registry, const XMLParser::XMLNode& entities_node);
+    
     void parse_entity(EntityRegistry& registry, const XMLParser::XMLNode& entity_node);
 
     // Getters and Setters
