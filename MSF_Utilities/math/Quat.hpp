@@ -56,6 +56,12 @@ public:
         double mag_squared = w * w + x * x + y * y + z * z;
         return Quat(w / mag_squared, -x / mag_squared, -y / mag_squared, -z / mag_squared);
     }
+    
+    friend std::ostream& operator<<(std::ostream& os, const Quat& q) {
+        os << "Quat(" << q.w << ", " << q.x << ", " << q.y << ", " << q.z << ")";
+        return os;
+    }
+
     // Quaternion interpolation (slerp)
     static Quat slerp(const Quat& q1, const Quat& q2, double t) {
         // Compute the cosine of the angle between the two quaternions

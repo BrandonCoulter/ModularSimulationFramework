@@ -9,6 +9,7 @@
 #pragma once
 #include <iostream>
 #include <atomic>
+#include <string>
 
 #include "Clock.hpp"
 #include "Scheduler.hpp"
@@ -31,7 +32,7 @@ public:
     void resume();
 
     // Simulation Initialization
-    void initialize();
+    void initialize(const std::string& scenario_path);
     void shutdown();
 
 private:
@@ -39,6 +40,8 @@ private:
     SimEventScheduler scheduler;
     EntityRegistry registry;
     SCF scf = SCF(); // Initialize SCF with reference to the entity registry
+
+    msf::SimDt dt = 0.001; // Simulation time step (seconds)
 
     bool is_running = true; // Flag to track if the simulation is running
     bool is_paused = false; // Flag to track if the simulation is paused

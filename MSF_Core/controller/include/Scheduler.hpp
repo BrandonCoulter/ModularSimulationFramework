@@ -12,7 +12,7 @@ public:
     void schedule_event(SimulationClock& clock, std::function<void()> event, SimulationClock::SimDt delay_seconds) {
         SimulationClock::SimTime execution_time = clock.now() + delay_seconds;
         event_queue.push({execution_time, event});
-        std::cout << "[DEBUG] Scheduled event for sim time: " << execution_time << "s (now: " << clock.now() 
+        std::cout << "[DEBUG] Scheduling event for sim time: " << execution_time << "s (now: " << clock.now() 
                   << "s, delay: " << delay_seconds << "s), queue size: " << event_queue.size() << std::endl;
     }
     // Process events that are due for execution

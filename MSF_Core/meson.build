@@ -3,6 +3,7 @@
 core_sources = [
     'main.cpp',
     'controller/src/Controller.cpp',
+    'controller/src/IO/ArgParse.cpp',
     'controller/src/IO/XMLParser.cpp',
     'controller/src/IO/SCF.cpp',
 ]

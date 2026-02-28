@@ -13,10 +13,15 @@
 #include <memory>
 
 #include "Entity.hpp"
-#include "Missile.hpp"
-#include "Waypoint.hpp"
 #include "EntityRegistry.hpp"
+#include "EventRequest.hpp"
+#include "Missile.hpp"
+#include "SimTime.hpp"
+#include "Waypoint.hpp"
 #include "XMLParser.hpp"
+
+#include "Quat.hpp"
+#include "Vec3.hpp"
 
 // Include necessary headers for file I/O, xml parsing, string manipulation, and data structures
 
@@ -27,9 +32,9 @@ public:
 
     ~SCF() = default;
 
-    bool parse_scf(EntityRegistry& registry);
+    bool parse_scf(EntityRegistry& registry, msf::SimDt& timestep);
     bool load_scf(const std::string& filepath);
-    
+
     void parse_entity(EntityRegistry& registry, const XMLParser::XMLNode& entity_node);
 
     // Getters and Setters

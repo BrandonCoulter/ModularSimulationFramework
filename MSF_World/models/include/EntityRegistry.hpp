@@ -86,7 +86,7 @@ public:
                 const double delay = event_request.event_time - current_time;
 
                 if (delay > 0.0) {
-                    std::cout << "[INFO] Scheduling event for Entity ID " << event_request.entity_id
+                    std::cout << "[INFO] Scheduled event for Entity ID " << event_request.entity_id
                               << ": " << event_request.event_description
                               << " (current: " << current_time << "s, target: " << event_request.event_time
                               << "s, delay: " << delay << "s)" << std::endl;
@@ -153,7 +153,9 @@ public:
 
             std::cout << "ID: " << pair.first
                       << ", Name: " << pair.second->get_name()
-                      << ", Type: " << type_name << std::endl;
+                      << ", Type: " << type_name 
+                      << ", Position: " << pair.second->get_position() 
+                      << ", Orientation: " << pair.second->get_orientation() << std::endl;
 
             if (status == 0 && demangled) {
                 free(demangled);

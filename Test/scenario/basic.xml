@@ -8,7 +8,7 @@
     </Metadata>
 
     <SimulationSetup>
-        <TimeStep>0.001</TimeStep>
+        <TimeStepInterval>0.001</TimeStepInterval>
         <Timeout>600.0</Timeout>
         <GenericEventTriggers>
             <!-- Enter Events Here As Needed -->
@@ -22,28 +22,32 @@
             <ModelClass>missile</ModelClass>
             <ModelType>dynamic</ModelType>
             <EmplacementData>
+                <!-- Position in meters -->
                 <position x="0.0" y="0.0" z="0.0"/>
-                <orientation roll="0.0" pitch="0.0" yaw="0.0"/>
+                <!-- Orientation Quat -->
+                <orientation w="1.0" x="0.0" y="0.0" z="0.0"/>
             </EmplacementData>
             <EntityParameters>
                 <parameter name="speed" value="1500.0" unit="m/s"/>
             </EntityParameters>
             <EventTriggers>
-                <!-- <trigger time="10.0" type="SELF_DESTRUCT" delay="1.0"/> -->
+                <trigger time="10.0" type="SELF_DESTRUCT" delay="0.0"/>
             </EventTriggers>
         </SimulationEntity>
         <SimulationEntity name="missile_1">
             <ModelClass>missile</ModelClass>
             <ModelType>dynamic</ModelType>
             <EmplacementData>
-                <position x="0.0" y="0.0" z="0.0"/>
-                <orientation roll="0.0" pitch="0.0" yaw="0.0"/>
+                <!-- Position in meters -->
+                <position x="270.0" y="10.0" z="890.0"/>
+                <!-- Orientation Quat (Rotated by 90 Degrees) -->
+                <orientation w="0.7071067811865476" x="0.0" y="0.7071067811865476" z="0.0"/>
             </EmplacementData>
             <EntityParameters>
                 <parameter name="speed" value="1500.0" unit="m/s"/>
             </EntityParameters>
             <EventTriggers>
-                <!-- <trigger time="45.0" type="STAGE2" delay="1.0"/> -->
+                <trigger time="45.0" type="STAGE2" delay="1.0"/>
             </EventTriggers>
         </SimulationEntity>
 

@@ -15,7 +15,6 @@ public:
     using WallTimePoint = WallClock::time_point;
 
     // Simulation time is represented as seconds.
-    // (This is your "SimTime" type. It's just a named alias.)
     using SimTime = double; // seconds
     using SimDt   = double; // seconds
 

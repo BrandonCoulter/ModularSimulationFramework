@@ -1,17 +1,18 @@
 #include "Controller.hpp"
 
-void Controller::initialize() {
+void Controller::initialize(const std::string& scenario_path) {
     std::cout << "[INFO] Initializing Simulation Controller" << std::endl;
 
     // Register All Entity Classes
     registry.register_classes();
 
-    // TODO: Hardcoded path needs to be replace with a argument reader
-    scf.set_scf_filepath("/Users/brandoncoulter/Documents/Coding/Simulation/ModularSimulationFramework/Test/scenario/basic.xml");
-    if (!scf.parse_scf(registry)) {
+    scf.set_scf_filepath(scenario_path);
+    if (!scf.parse_scf(registry, dt)) {
         std::cerr << "[ERROR] Failed to parse SCF file: " << scf.get_scf_filepath() << std::endl;
         exit(EXIT_FAILURE);
     }
+
+    registry.print_all_entities();
 
     scheduler.schedule_event(clock, [this]() {
         std::cout << "[EVENT] Scheduled Shutdown Event Triggered at t=" << clock.now() << "s" << std::endl;
@@ -24,9 +25,6 @@ void Controller::initialize() {
 }
 
 void Controller::run() {
-    // Fixed-step simulation tick (seconds). Start with 100 Hz.
-    constexpr double dt = 0.001;
-
     // Main application loop
     while (is_running) {
         // 1) Schedule any new events requested by entities (uses ABSOLUTE sim time)

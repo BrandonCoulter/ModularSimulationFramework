@@ -16,6 +16,20 @@ public:
         Entity::request_event(event_request); // Just call the base request_event for now
     };
 
+    void set_position(const Vec3& new_position) {
+        position = new_position;
+    }
+    Vec3 get_position() const {
+        return position;
+    }
+    
+    void set_orientation(const Quat& new_orientation) {
+        orientation = new_orientation;
+    }
+    Quat get_orientation() const {
+        return orientation;
+    }
+
 protected:
     Vec3 position; // Position in 3D space
     Vec3 velocity; // Velocity vector

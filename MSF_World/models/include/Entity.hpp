@@ -53,6 +53,10 @@ public:
     virtual void update(const double t, const double dt) = 0; // Pure virtual function to be implemented by derived classes
     virtual void shutdown();
     virtual void request_event(const EventRequest& event_request); // Event request function
+    virtual void set_position(const Vec3& new_position) = 0;
+    virtual Vec3 get_position() const = 0;
+    virtual void set_orientation(const Quat& new_orientation) = 0;
+    virtual Quat get_orientation() const = 0;
 
     // Object Variables
     // Object to hold the events requested by entities
