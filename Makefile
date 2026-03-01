@@ -22,7 +22,7 @@ clean:
 
 # Run tests
 test: build
-	meson test -C $(BUILD_DIR)
+	meson test -C $(BUILD_DIR) --print-errorlogs
 
 # Install the project
 install: build

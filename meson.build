@@ -7,3 +7,4 @@ project('ModularSimulationFramework', 'cpp',
 subdir('MSF_Utilities')
 subdir('MSF_World')
 subdir('MSF_Core')
+subdir('Test')
